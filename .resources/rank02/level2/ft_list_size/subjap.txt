@@ -1,0 +1,18 @@
+課題名           : ft_list_size
+提出ファイル      : ft_list_size.c
+使用可能関数      : 
+--------------------------------------------------------------------------------
+
+渡されたリンクリストの要素の数を返す関数を書いてください。
+
+次のように宣言する必要があります：
+
+int	ft_list_size(t_list *begin_list);
+
+プログラム ft_list_size.c で次の構造体を使用する必要があります：
+
+typedef struct    s_list
+{
+    struct s_list *next;
+    void          *data;
+}                 t_list;

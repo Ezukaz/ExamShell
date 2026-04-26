@@ -1,0 +1,45 @@
+課題名           : filter
+提出ファイル      : filter.c
+使用可能関数      : read, write, strlen, memmem, memmove, malloc, calloc,
+realloc, free, printf, fprintf, stdout, stderr, perror
+--------------------------------------------------------------------------------
+
+1 つだけの引数を受け取るプログラムを書いてください。
+
+プログラムは stdin から読み込み、s が `*` で置換される（s の長さと同じ個数）場合を除いて、読み込まれたすべてのコンテンツを stdout に書き込みます。プログラムはカスタム読み込み関数を使用してランダムなバッファサイズでテストされます。したがって、プログラムに設定されたバッファは、新しい呼び込みのたびに異なる数の文字で満たされます。
+
+
+例えば：
+
+./filter bonjour
+は以下と同じように動作します：
+sed 's/bonjour/*******/g'
+
+./filter abc
+は以下と同じように動作します：
+sed's/abc/***/g'
+
+より一般的には、プログラムはこのディレクトリに存在するシェルスクリプト filter.sh と同等である必要があります（プログラムと比較できます）。
+
+読み込みまたは malloc 中にエラーが発生した場合は、stderr に「Error: 」の後にエラーメッセージを書き込み、1 を返す必要があります。
+
+引数なし、空の引数、または複数の引数で呼び出された場合、プログラムは 1 を返す必要があります。
+
+例えば、これは動作するはずです：
+
+$> echo 'abcdefaaaabcdeabcabcdabc' | ./filter abc | cat -e
+***defaaa***de******d***$
+$> echo 'ababcabababc' | ./filter ababc | cat -e
+*****ab*****$
+$>
+
+注記：
+memmem は以下を含みます：
+                #define _GNU_SOURCE
+			    #include <string.h>
+
+perror は以下を含みます：
+                #include <errno.h>
+
+read は以下を含みます：
+                #include <fcntl.h>

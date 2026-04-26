@@ -1,0 +1,41 @@
+課題名           : ft_popen
+提出ファイル      : ft_popen.c
+使用可能関数      : pipe, fork, dup2, execvp, close, exit
+--------------------------------------------------------------------------------------
+
+次の関数を書いてください：
+
+int ft_popen(const char *file, char *const argv[], char type);
+
+関数は argv の引数を使用して実施可能ファイルを起動しる必要があります。
+type が 'r' の場合、関数はコマンドの出力に接続されたファイル記述子を返します。
+type が 'w' の場合、関数はコマンドの入力に接続されたファイル記述子を返します。
+エラーまたは無効なパラメーターの場合、関数は -1 を返します。
+
+例えば、関数は次のように使用できます：
+
+int main()
+{
+    int  fd;
+    char *line;
+
+    fd = ft_popen("ls", (char *const []){"ls", NULL}, 'r');
+    while ((line = get_next_line(fd)))
+        ft_putstr(line);
+    return (0);
+}
+
+
+int	main() {
+	int	fd = ft_popen("ls", (char *const []){"ls", NULL}, 'r');
+	dup2(fd, 0);
+	fd = ft_popen("grep", (char *const []){"grep", "c", NULL}, 'r');
+	char	*line;
+	while ((line = get_next_line(fd)))
+		printf("%s", line);
+}
+
+
+素敷：
+ファイル記述子を漏らしたくない！
+この演習は libc の popen() から着想を得ています。

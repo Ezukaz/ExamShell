@@ -1,0 +1,25 @@
+課題名           : rstr_capitalizer
+提出ファイル      : rstr_capitalizer.c
+使用可能関数      : write
+--------------------------------------------------------------------------------
+
+1 つ以上の文字列を受け取り、各引数について各単語の最後の英字だけを大文字にし、それ以外を小文字にして表示するプログラムを書いてください。
+
+単語は、スペース/タブ、または文字列の先頭/末尾で区切られた部分です。
+単語が 1 文字だけの場合、その文字は大文字にします。
+
+英字は [a-zA-Z] の文字です。
+
+引数がない場合は、改行のみを表示します。
+
+例:
+
+$> ./rstr_capitalizer | cat -e
+$
+$> ./rstr_capitalizer "a FiRSt LiTTlE TESt" | cat -e
+A firsT littlE tesT$
+$> ./rstr_capitalizer "SecONd teST A LITtle BiT   Moar comPLEX" "   But... This iS not THAT COMPLEX" "     Okay, this is the last 1239809147801 but not    the least    t" | cat -e
+seconD tesT A littlE biT   moaR compleX$
+   but... thiS iS noT thaT compleX$
+     okay, thiS iS thE lasT 1239809147801 buT noT    thE leasT    T$
+$>

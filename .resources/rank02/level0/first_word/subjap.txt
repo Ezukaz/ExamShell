@@ -1,0 +1,24 @@
+課題名           : first_word
+提出ファイル      : first_word.c
+使用可能関数      : write
+--------------------------------------------------------------------------------
+
+文字列を1つ受け取り、その先頭の単語を表示し、続けて改行を出力するプログラムを作成してください。
+
+単語とは、空白またはタブで区切られた文字列の一部、もしくは文字列の先頭/末尾で区切られた部分を指します。
+
+引数の数が1でない場合、または単語が存在しない場合は、改行のみを表示してください。
+
+実行例:
+
+$> ./first_word "FOR PONY" | cat -e
+FOR$
+$> ./first_word "this        ...    is sparta, then again, maybe    not" | cat -e
+this$
+$> ./first_word "   " | cat -e
+$
+$> ./first_word "a" "b" | cat -e
+$
+$> ./first_word "  lorem,ipsum  " | cat -e
+lorem,ipsum$
+$>

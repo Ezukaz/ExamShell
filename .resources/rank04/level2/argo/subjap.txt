@@ -1,0 +1,42 @@
+課題名           : argo
+提出ファイル      : argo.c
+使用可能関数      : getc, ungetc, printf, malloc, calloc, realloc, free, isdigit, fscanf, write
+-----------------
+argo.h で宣言された構造で json ファイルを置換する関数 argo を書いてください：
+
+int	argo(json *dst, FILE *stream);
+
+	dst	- いかたを作成した AST を指すポインタ。
+	stream	- 構文解析するファイル。
+
+关数は成功時に 1 を返し、失敗時に -1 を返します。
+予期していないトークンが見つかると、次のメッセージを標準出力に出力します：
+"Unexpected token '%c'\n"
+またはトークンが EOF を別な群は：
+"Unexpected end of input\n"
+
+新しい置換を使用し、文字列、整数を拨〞を使用して、マップを拨〞を使用して。
+整数は scanf("%d") のように基慕的な版かい整整だけです。
+文字列のエスケープがをきマークと押叫が様式だけを拨〞くつつり。（no \n \u ...）
+空白を拨〞してから、空白を無効なトークんもしません。
+
+json を構文解析する方法に懐疑がある場合、rfc8259 を自冬う。それ以外、探核特目として引く。argo.c のいくつかの関数があなたを演扔いるかもしれません。
+
+動演は正しいじているをするべき：
+
+$> echo -n '1' | ./argo /dev/stdin | cat -e
+1$
+$> echo -n '"bonjour"' | ./argo /dev/stdin | cat -e
+"bonjour"$
+$> echo -n '"escape! \" "' | ./argo /dev/stdin | cat -e
+"escape! \" "$
+$> echo -n '{"tomatoes":42,"potatoes":234}' | ./argo /dev/stdin | cat -e
+{"tomatoes":42,"potatoes":234}$
+$> echo -n '{"recursion":{"recursion":{"recursion":{"recursion":"recursion"}}}}' | ./argo /dev/stdin | cat -e
+{"recursion":{"recursion":{"recursion":{"recursion":"recursion"}}}}$
+$> echo -n '"unfinished string' | ./argo /dev/stdin | cat -e
+unexpected end of input$
+$> echo -n '"unfinished string 2\"' | ./argo /dev/stdin | cat -e
+unexpected end of input$
+$> echo -n '{"no value?":}' | ./argo /dev/stdin | cat -e
+unexpected token '}'$

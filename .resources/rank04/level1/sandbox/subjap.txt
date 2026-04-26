@@ -1,0 +1,24 @@
+課題名           : sandbox
+提出ファイル      : sandbox.c
+使用可能関数      : fork, waitpid, exit, alarm, sigaction, kill, printf, strsignal,
+errno, sigaddset, sigemptyset, sigfillset, sigdelset, sigismember
+--------------------------------------------------------------------------------------
+
+次の関数を書いてください：
+
+#include <stdbool.h>
+int sandbox(void (*f)(void), unsigned int timeout, bool verbose);
+
+この関数らは、関数 f が良い関数であるか文値のない関数であるかをテストします。f が良い場合は 1 を返す、f が文値のない場合は 0 を返す、関数にエラーがある場合は -1 を返します。
+
+関数 f がシグナル（segfault、abort...）によって終了または停止された場合、　０ 以外の終了こードで終了した場合、またはタイムアウトした場合、関数は文値のないとみなされます。
+
+verbose が true の場合、次のいずれかの適切なメッセージを書けます：
+"Nice function!\n"
+"Bad function: exited with code <exit_code>\n"
+"Bad function: <signal description>\n"
+"Bad function: timed out after <timeout> seconds\n"
+
+あなたはプロセスを漏らしてといけない（ゾンビ状態であっても、これは wait を使用して確認されます）。
+
+をっほ文値のそうな関数で　あなたのこードをテストします。

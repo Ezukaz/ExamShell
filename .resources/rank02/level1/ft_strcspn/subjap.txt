@@ -1,0 +1,10 @@
+課題名           : ft_strcspn
+提出ファイル      : ft_strcspn.c
+使用可能関数      : None
+---------------------------------------------------------------
+
+関数 `strcspn`（`man strcspn`）の挙動を完全に再現してください。
+
+関数は次のようにプロトタイプ宣言してください:
+
+size_t	ft_strcspn(const char *s, const char *reject);

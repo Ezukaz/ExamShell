@@ -1,0 +1,25 @@
+課題名           : wdmatch
+提出ファイル      : wdmatch.c
+使用可能関数      : write
+--------------------------------------------------------------------------------
+
+2 つの文字列を受け取り、2 つ目の文字列から文字を取り出して、
+1 つ目の文字列を順番を保ったまま作れるかどうかを判定するプログラムを書いてください。
+
+作れる場合は 1 つ目の文字列を表示し、最後に \n を出力します。
+作れない場合は \n のみを出力します。
+
+引数の数が 2 でない場合も \n のみを出力します。
+
+例:
+
+$>./wdmatch "faya" "fgvvfdxcacpolhyghbreda" | cat -e
+faya$
+$>./wdmatch "faya" "fgvvfdxcacpolhyghbred" | cat -e
+$
+$>./wdmatch "quarante deux" "qfqfsudf arzgsayns tsregfdgs sjytdekuoixq " | cat -e
+quarante deux$
+$>./wdmatch "error" rrerrrfiiljdfxjyuifrrvcoojh | cat -e
+$
+$>./wdmatch | cat -e
+$>

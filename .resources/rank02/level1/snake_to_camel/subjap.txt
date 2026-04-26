@@ -1,0 +1,18 @@
+課題名           : snake_to_camel
+提出ファイル      : snake_to_camel.c
+使用可能関数      : malloc, free, realloc, write
+--------------------------------------------------------------------------------
+
+snake_case 形式の文字列を1つ受け取り、lowerCamelCase 形式の文字列に変換するプログラムを作成してください。
+
+snake_case 文字列とは、各単語が小文字で、アンダースコア "_" で区切られた文字列です。
+
+lowerCamelCase 文字列とは、最初の単語を除き、各単語が大文字で始まる文字列です。
+
+実行例:
+$>./snake_to_camel "here_is_a_snake_case_word"
+hereIsASnakeCaseWord
+$>./snake_to_camel "hello_world" | cat -e
+helloWorld$
+$>./snake_to_camel | cat -e
+$

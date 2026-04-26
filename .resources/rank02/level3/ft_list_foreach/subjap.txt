@@ -1,0 +1,22 @@
+課題名           : ft_list_foreach
+提出ファイル      : ft_list_foreach.c, ft_list.h
+使用可能関数      :
+--------------------------------------------------------------------------------
+
+リストと関数ポインタを受け取り、この関数をリストの各要素に適用する関数を書いてください。
+
+次のように宣言する必要があります：
+
+void    ft_list_foreach(t_list *begin_list, void (*f)(void *));
+
+`f` が指す関数は以下のように使用されます：
+
+(*f)(list_ptr->data);
+
+次の構造体を使用し、`ft_list.h` というファイルで提出してください：
+
+typedef struct    s_list
+{
+    struct s_list *next;
+    void          *data;
+}                 t_list;

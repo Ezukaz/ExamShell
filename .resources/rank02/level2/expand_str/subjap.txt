@@ -1,0 +1,32 @@
+課題名           : expand_str
+提出ファイル      : expand_str.c
+使用可能関数      : write
+--------------------------------------------------------------------------------
+
+文字列を1つ受け取り、単語間に正確に3つのスペースで区切り、先頭と末尾に空白またはタブがない形で表示し、最後に改行を出力するプログラムを作成してください。
+
+単語とは、空白またはタブで区切られた文字列の一部、もしくは文字列の先頭または末尾で区切られた部分を指します。
+
+引数の数が1でない場合、または単語がない場合は、改行のみを表示してください。
+
+実行例:
+
+$> ./expand_str "See? It's easy to print the same thing" | cat -e
+See?   It's   easy   to   print   the   same   thing$
+$> ./expand_str " this        time it      will     be    more complex  " | cat -e
+this   time   it   will   be   more   complex$
+$> ./expand_str "No S*** Sherlock..." "nAw S*** ShErLaWQ..." | cat -e
+$
+$> ./expand_str "" | cat -e
+$
+$>
+
+$> ./expand_str "vous   voyez   c'est   facile   d'afficher   la   meme   chose" | cat -e
+vous   voyez   c'est   facile   d'afficher   la   meme   chose$
+$> ./expand_str " seulement          la c'est      plus dur " | cat -e
+seulement   la   c'est   plus   dur$
+$> ./expand_str "comme c'est cocasse" "vous avez entendu, Mathilde ?" | cat -e
+$
+$> ./expand_str "" | cat -e
+$
+$>

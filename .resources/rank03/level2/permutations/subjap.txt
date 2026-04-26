@@ -1,0 +1,27 @@
+課題名           : permutations
+提出ファイル      : *.c *.h
+使用可能関数      : puts, malloc, calloc, realloc, free, write
+---------------------------------------------------------------
+
+引数として与えられた文字列のすべての順列を出力するプログラムを書いてください。
+
+解法はアルファベット順で与えられる必要があります。
+
+重複を含む文字列ではテストを行いません（例：'abccd'）。
+
+例えば、これは動作するはずです：
+
+$> ./permutations a | cat -e
+a$
+
+$> ./permutations ab | cat -e
+ab$
+ba$
+
+$> ./permutations abc | cat -e
+abc$
+acb$
+bac$
+bca$
+cab$
+cba$

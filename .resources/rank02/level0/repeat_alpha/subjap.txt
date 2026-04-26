@@ -1,0 +1,28 @@
+課題名           : repeat_alpha
+提出ファイル      : repeat_alpha.c
+使用可能関数      : write
+--------------------------------------------------------------------------------
+
+`repeat_alpha` という名前のプログラムを作成してください。
+このプログラムは文字列を1つ受け取り、アルファベットの各文字をそのアルファベット順の位置の回数だけ繰り返して表示し、最後に改行を出力します。
+
+`a` は `a`、`b` は `bb`、`e` は `eeeee` のようになります。
+
+大文字・小文字はそのまま維持してください。
+
+引数の数が1でない場合は、改行のみを表示してください。
+
+実行例:
+
+$>./repeat_alpha "abc"
+abbccc
+$>./repeat_alpha "Alex." | cat -e
+Alllllllllllleeeeexxxxxxxxxxxxxxxxxxxxxxxx.$
+$>./repeat_alpha 'abacadaba 42!' | cat -e
+abbacccaddddabba 42!$
+$>./repeat_alpha | cat -e
+$
+$>
+$>./repeat_alpha "" | cat -e
+$
+$>

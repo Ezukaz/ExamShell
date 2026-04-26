@@ -1,0 +1,24 @@
+課題名           : rev_wstr
+提出ファイル      : rev_wstr.c
+使用可能関数      : write, malloc, free
+--------------------------------------------------------------------------------
+
+文字列をパラメータとして受け取り、その単語を逆順で表示するプログラムを作成してください。
+
+「単語」とは、スペースやタブで区切られた、または文字列の開始/終了で区切られた文字列の一部です。
+
+引数の数が1と異なる場合、プログラムは改行を表示します。
+
+テストされるパラメータには「追加の」スペースはありません（つまり、文字列の開始または終了に追加のスペースはなく、単語は常に正確に1つのスペースで区切られています）。
+
+実行例:
+
+$> ./rev_wstr "You hate people! But I love gatherings. Isn't it ironic?" | cat -e
+ironic? it Isn't gatherings. love I But people! hate You$
+$>./rev_wstr "abcdefghijklm"
+abcdefghijklm
+$> ./rev_wstr "Wingardium Leviosa" | cat -e
+Leviosa Wingardium$
+$> ./rev_wstr | cat -e
+$
+$>

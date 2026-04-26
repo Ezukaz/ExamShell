@@ -1,0 +1,32 @@
+課題名           : rostring
+提出ファイル      : rostring.c
+使用可能関数      : write, malloc, free
+--------------------------------------------------------------------------------
+
+文字列を受け取り、その文字列を左に1単語回転させて表示するプログラムを作成してください。
+
+したがって、最初の単語が最後になり、他の単語は同じ順序のままです。
+
+「単語」とは、スペース/タブで区切られた、または文字列の開始/終了で区切られた文字列の一部として定義されます。
+
+単語は出力で1つのスペースのみで区切られます。
+
+1つ未満の引数がある場合、プログラムは改行を表示します。
+
+実行例:
+
+$>./rostring "abc   " | cat -e
+abc$
+$>
+$>./rostring "Que la      lumiere soit et la lumiere fut"
+la lumiere soit et la lumiere fut Que
+$>
+$>./rostring "     AkjhZ zLKIJz , 23y"
+zLKIJz , 23y AkjhZ
+$>
+$>./rostring "first" "2" "11000000"
+first
+$>
+$>./rostring | cat -e
+$
+$>

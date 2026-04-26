@@ -1,0 +1,25 @@
+課題名           : search_and_replace
+提出ファイル      : search_and_replace.c
+使用可能関数      : write, exit
+--------------------------------------------------------------------------------
+
+`search_and_replace` という名前のプログラムを作成してください。
+このプログラムは3つの引数を受け取り、1つ目の引数である文字列内の文字（2つ目の引数）を別の文字（3つ目の引数）に置き換えます。
+
+引数の数が3でない場合は、改行のみを表示してください。
+
+2つ目の引数が1つ目の引数（文字列）に含まれていない場合、プログラムは文字列をそのまま表示し、最後に改行を出力します。
+
+実行例:
+$>./search_and_replace "Papache est un sabre" "a" "o"
+Popoche est un sobre
+$>./search_and_replace "zaz" "art" "zul" | cat -e
+$
+$>./search_and_replace "zaz" "r" "u" | cat -e
+zaz$
+$>./search_and_replace "jacob" "a" "b" "c" "e" | cat -e
+$
+$>./search_and_replace "ZoZ eT Dovid oiME le METol." "o" "a" | cat -e
+ZaZ eT David aiME le METal.$
+$>./search_and_replace "wNcOre Un ExEmPle Pas Facilw a Ecrirw " "w" "e" | cat -e
+eNcOre Un ExEmPle Pas Facile a Ecrire $

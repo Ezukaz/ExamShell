@@ -1,0 +1,22 @@
+課題名           : str_capitalizer
+提出ファイル      : str_capitalizer.c
+使用可能関数      : write
+--------------------------------------------------------------------------------
+
+1つまたは複数の文字列を受け取り、各引数について、単語の最初の文字を大文字にし（文字の場合）、残りを小文字にして、標準出力に結果を表示し、最後に `\n` を出力するプログラムを作成してください。
+
+"単語"とは、スペース/タブ、または文字列の開始/終了で区切られた文字列の一部と定義されます。単語が1文字のみの場合、大文字にしなければなりません。
+
+引数がない場合、プログラムは `\n` を表示してください。
+
+実行例:
+
+$> ./str_capitalizer | cat -e
+$
+$> ./str_capitalizer "a FiRSt LiTTlE TESt" | cat -e
+A First Little Test$
+$> ./str_capitalizer "__SecONd teST A LITtle BiT   Moar comPLEX" "   But... This iS not THAT COMPLEX" "     Okay, this is the last 1239809147801 but not    the least    t" | cat -e
+__second Test A Little Bit   Moar Complex$
+   But... This Is Not That Complex$
+     Okay, This Is The Last 1239809147801 But Not    The Least    T$
+$>
