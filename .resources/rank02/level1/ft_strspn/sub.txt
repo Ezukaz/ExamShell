@@ -1,0 +1,24 @@
+Assignment name  : ft_strspn
+Expected files   : ft_strspn.c
+Allowed functions: None
+---------------------------------------------------------------
+
+Reproduce exactly the behavior of the strspn function
+(man strspn).
+
+The function should be prototyped as follows:
+
+size_t  ft_strspn(const char *s, const char *accept);
+
+strspn() calculates the length of the initial segment of s
+which consists entirely of bytes in accept.
+
+It returns the number of bytes in the initial segment of s
+which consist only of bytes from accept.
+
+Examples:
+    ft_strspn("hello", "hel")    --> 4 (h, e, l, l all match)
+    ft_strspn("hello", "xyz")    --> 0
+    ft_strspn("hello", "")       --> 0
+    ft_strspn("", "abc")         --> 0
+    ft_strspn("aabbcc", "ab")    --> 4

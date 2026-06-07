@@ -1,0 +1,24 @@
+【日本語版】
+課題名           : ft_strpbrk
+提出ファイル      : ft_strpbrk.c
+使用可能関数      : なし
+---------------------------------------------------------------
+
+strpbrk 関数の動作を完全に再現してください
+(man strpbrk 参照)。
+
+関数宣言は次の通りです:
+
+char    *ft_strpbrk(const char *s1, const char *s2);
+
+strpbrk() は、文字列 s1 の中で、文字列 s2 に含まれる
+いずれかの文字が最初に現れる位置を探します。
+
+s1 の中に s2 のいずれかの文字が見つかった場合は、
+その文字へのポインタを返します。
+見つからなかった場合は NULL を返します。
+
+例:
+    ft_strpbrk("hello world", "aeiou")  --> 'e' へのポインタを返す
+    ft_strpbrk("hello world", "xyz")    --> NULL を返す
+    ft_strpbrk("hello", "")             --> NULL を返す

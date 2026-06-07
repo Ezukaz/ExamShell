@@ -1,0 +1,24 @@
+【日本語版】
+課題名           : ft_strspn
+提出ファイル      : ft_strspn.c
+使用可能関数      : なし
+---------------------------------------------------------------
+
+strspn 関数の動作を完全に再現してください
+(man strspn 参照)。
+
+関数宣言は次の通りです:
+
+size_t  ft_strspn(const char *s, const char *accept);
+
+strspn() は、文字列 s の先頭から、accept に含まれる
+文字だけで構成される連続した部分の長さを返します。
+
+s の先頭から accept の文字だけが続く部分のバイト数を返します。
+
+例:
+    ft_strspn("hello", "hel")    --> 4 (h, e, l, l がすべて一致)
+    ft_strspn("hello", "xyz")    --> 0
+    ft_strspn("hello", "")       --> 0
+    ft_strspn("", "abc")         --> 0
+    ft_strspn("aabbcc", "ab")    --> 4

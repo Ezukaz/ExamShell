@@ -3,8 +3,11 @@ source functions.sh
 source colors.sh
 
 rank=$1
-level=$2
-custom_filter=$3
+shift
+order=${@: -1}
+all_args=("$@")
+unset 'all_args[${#all_args[@]}-1]'
+IFS=' ' read -ra chosen_entries <<< "${all_args[*]}"
 
 base_dir="$(cd "$(dirname "$0")" && pwd)"
 
@@ -14,66 +17,23 @@ else
     LANG_LABEL="🌐 JP"
 fi
 
-# ── Build question pool ───────────────────────────────────────────────────────
-if [[ "$rank" == "rank02" ]]; then
-    if [[ "$level" == *"level0"* ]]; then
-        qsub=(first_word fizzbuzz ft_putstr ft_strcpy ft_strlen ft_swap repeat_alpha rev_print rot_13 rotone search_and_replace ulstr)
-    elif [[ "$level" == *"level1"* ]]; then
-        qsub=(alpha_mirror camel_to_snake print_bits do_op ft_atoi ft_strcmp reverse_bits ft_strrev ft_strcspn ft_strdup inter is_power_of_2 last_word max snake_to_camel swap_bits union wdmatch ft_strpbrk ft_strspn)
-    elif [[ "$level" == *"level2"* ]]; then
-        qsub=(add_prime_sum epur_str expand_str ft_list_size ft_atoi_base ft_range ft_rrange hidenp lcm paramsum pgcd print_hex rstr_capitalizer str_capitalizer tab_mult)
-    elif [[ "$level" == *"level3"* ]]; then
-        qsub=(flood_fill fprime ft_itoa ft_split rev_wstr rostring ft_list_foreach sort_int_tab sort_list ft_list_remove_if)
-    else
-        echo "Invalid level: $level for rank02"; exit 1
-    fi
-elif [[ "$rank" == "rank03" ]]; then
-    if [[ "$level" == *"level1"* ]]; then
-        qsub=(broken_gnl filter scanf)
-    elif [[ "$level" == *"level2"* ]]; then
-        qsub=(n_queens permutations powerset rip tsp)
-    else
-        echo "Invalid level: $level for rank03"; exit 1
-    fi
-elif [[ "$rank" == "rank04" ]]; then
-    if [[ "$level" == *"level1"* ]]; then
-        qsub=(ft_popen picoshell sandbox)
-    elif [[ "$level" == *"level2"* ]]; then
-        qsub=(argo vbc)
-    else
-        echo "Invalid level: $level for rank04"; exit 1
-    fi
-else
-    echo "Invalid rank: $rank"; exit 1
-fi
+order_label="🔀 Random"
+[[ "$order" == "ordered" ]] && order_label="📋 Ordered"
 
-if [[ -n "$custom_filter" ]]; then
-    read -ra filter_arr <<< "$custom_filter"
-    filtered=()
-    for ex in "${filter_arr[@]}"; do
-        for q in "${qsub[@]}"; do
-            [[ "$q" == "$ex" ]] && { filtered+=("$ex"); break; }
-        done
-    done
-    [[ ${#filtered[@]} -eq 0 ]] && { echo "No valid exercises in custom filter."; exit 1; }
-    qsub=("${filtered[@]}")
-fi
-
-if [[ "${EXAM_ORDER:-random}" == "random" ]]; then
-    size=${#qsub[*]}
+if [[ "$order" == "random" ]]; then
+    size=${#chosen_entries[*]}
     max=$(( 32768 / size * size ))
     for ((i = size - 1; i > 0; i--)); do
         while (( (rand = RANDOM) >= max )); do :; done
         rand=$(( rand % (i + 1) ))
-        tmp=${qsub[i]}; qsub[i]=${qsub[rand]}; qsub[rand]=$tmp
+        tmp=${chosen_entries[i]}
+        chosen_entries[i]=${chosen_entries[rand]}
+        chosen_entries[rand]=$tmp
     done
 fi
-shuffled=("${qsub[@]}")
-num=${#shuffled[@]}
-i=0
 
-order_label="🔀 Random"
-[[ "${EXAM_ORDER:-random}" == "ordered" ]] && order_label="📋 Ordered"
+num=${#chosen_entries[@]}
+i=0
 
 declare -A passed_flags
 
@@ -92,9 +52,9 @@ format_time() {
 }
 
 setup_rendu() {
-    local ex=$1
+    local rank=$1 level=$2 ex=$3
     mkdir -p "$base_dir/../../rendu/$ex"
-    if [[ "$rank" == "rank03" && "$level" == *"level1"* ]]; then
+    if [[ "$rank" == "rank03" && "$level" == "level1" ]]; then
         if [[ "$ex" == "broken_gnl" ]]; then
             [ -f "broken_gnl.c" ] && cp "broken_gnl.c" "$base_dir/../../rendu/$ex/"
             touch "$base_dir/../../rendu/$ex/get_next_line.c"
@@ -104,9 +64,9 @@ setup_rendu() {
         else
             touch "$base_dir/../../rendu/$ex/${ex}.c"
         fi
-    elif [[ "$rank" == "rank03" && "$level" == *"level2"* ]]; then
+    elif [[ "$rank" == "rank03" && "$level" == "level2" ]]; then
         [[ "$ex" == "tsp" && -f "tsp.c" ]] && cp "tsp.c" "$base_dir/../../rendu/$ex/"
-    elif [[ "$rank" == "rank04" && "$level" == *"level2"* ]]; then
+    elif [[ "$rank" == "rank04" && "$level" == "level2" ]]; then
         [ -f "given.c" ] && cp "given.c" "$base_dir/../../rendu/$ex/"
         touch "$base_dir/../../rendu/$ex/${ex}.c"
         [[ "$ex" == "vbc" ]] && touch "$base_dir/../../rendu/$ex/vbc.h"
@@ -142,20 +102,22 @@ finish_session() {
     echo ""
     printf "  Score:  ${GREEN}${BOLD}%d / %d${RESET}\n" "$passed" "$num"
     printf "  Time:   ${GREEN}%s${RESET}\n" "$(format_time)"
-    printf "  Level:  ${YELLOW}%s${RESET}\n" "$level"
+    printf "  Mode:   ${YELLOW}Custom (cross-level)${RESET}\n"
     printf "  Order:  ${MAGENTA}%s${RESET}\n" "$order_label"
     echo ""
     printf "  ${GREEN}Passed:${RESET}\n"
-    for ex in "${shuffled[@]}"; do
-        if [[ "${passed_flags[$ex]:-}" == "1" ]]; then
-            printf "    ${GREEN}✓${RESET} %s\n" "$ex"
+    for entry in "${chosen_entries[@]}"; do
+        if [[ "${passed_flags[$entry]:-}" == "1" ]]; then
+            lvl="${entry%%:*}"; ex="${entry##*:}"
+            printf "    ${GREEN}✓${RESET} %-10s  %s\n" "[$lvl]" "$ex"
         fi
     done
     echo ""
     printf "  ${RED}Not passed:${RESET}\n"
-    for ex in "${shuffled[@]}"; do
-        if [[ "${passed_flags[$ex]:-}" != "1" ]]; then
-            printf "    ${RED}✗${RESET} %s\n" "$ex"
+    for entry in "${chosen_entries[@]}"; do
+        if [[ "${passed_flags[$entry]:-}" != "1" ]]; then
+            lvl="${entry%%:*}"; ex="${entry##*:}"
+            printf "    ${RED}✗${RESET} %-10s  %s\n" "[$lvl]" "$ex"
         fi
     done
     echo ""
@@ -166,21 +128,24 @@ finish_session() {
     exit
 }
 
-cd "$base_dir/../$rank/$level/${shuffled[0]}"
-
 while true; do
-    cd "$base_dir/../$rank/$level/${shuffled[$i]}"
-    setup_rendu "${shuffled[$i]}"
+    entry="${chosen_entries[$i]}"
+    level="${entry%%:*}"
+    ex="${entry##*:}"
+
+    cd "$base_dir/../$rank/$level/$ex"
+    setup_rendu "$rank" "$level" "$ex"
     subject=$(read_subject_text)
 
     while true; do
         clear
         passed_now=$(score_summary)
         already_passed=""
-        [[ "${passed_flags[${shuffled[$i]}]:-}" == "1" ]] && already_passed=" ${GREEN}✓${RESET}"
-        printf "${CYAN}[${shuffled[$i]}]${RESET}%b" "$already_passed"
+        [[ "${passed_flags[$entry]:-}" == "1" ]] && already_passed=" ${GREEN}✓${RESET}"
+        printf "${CYAN}[%s]${RESET}%b" "$ex" "$already_passed"
         printf "  ${YELLOW}(%d/%d)${RESET}" $((i + 1)) $num
         printf "  ${GREEN}Score: %d/%d${RESET}" "$passed_now" "$num"
+        printf "  ${MAGENTA}[%s]${RESET}" "$level"
         printf "  ${BLUE}$LANG_LABEL${RESET}"
         printf "  ${MAGENTA}$order_label${RESET}"
         printf "  ${GREEN}⏱ %s${RESET}\n" "$(format_time)"
@@ -218,7 +183,7 @@ while true; do
                 fi
                 read -rp "${GREEN}${BOLD}Please press enter to continue.${RESET}" _
                 if grep -q "PASSED" /tmp/tester_out.txt; then
-                    passed_flags["${shuffled[$i]}"]=1
+                    passed_flags["$entry"]=1
                     i=$((i + 1))
                     [ $i -ge $num ] && finish_session
                 fi

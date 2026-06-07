@@ -1,0 +1,22 @@
+Assignment name  : ft_strpbrk
+Expected files   : ft_strpbrk.c
+Allowed functions: None
+---------------------------------------------------------------
+
+Reproduce exactly the behavior of the function strpbrk
+(man strpbrk).
+
+The function should be prototyped as follows:
+
+char    *ft_strpbrk(const char *s1, const char *s2);
+
+strpbrk() locates the first occurrence in the string s1 of
+any of the characters in the string s2.
+
+It returns a pointer to the character in s1 that matches one
+of the characters in s2, or NULL if no such character is found.
+
+Examples:
+    ft_strpbrk("hello world", "aeiou")  --> returns pointer to 'e'
+    ft_strpbrk("hello world", "xyz")    --> returns NULL
+    ft_strpbrk("hello", "")             --> returns NULL

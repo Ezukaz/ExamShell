@@ -23,13 +23,8 @@ display_animation() {
     $(tput sgr0)
 }
 
-# Returns the subject file to use based on language setting.
-# If EXAMSHELL_LANG=en, always use sub.txt (English).
-# Otherwise prefer subjap.txt when it exists (default).
 get_subject_text_file() {
-    if [[ "${EXAMSHELL_LANG:-}" == "en" ]]; then
-        echo "sub.txt"
-    elif [ -f "subjap.txt" ]; then
+    if [ -f "subjap.txt" ]; then
         echo "subjap.txt"
     else
         echo "sub.txt"
